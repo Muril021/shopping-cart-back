@@ -24,12 +24,16 @@ class ProductController extends Controller
 
   public function store(Request $request)
   {
-    $product = new Product;
+    $data = $request->validate([
+      'name' => 'required|string|max:255',
+      'price' => 'required|numeric',
+      'categories_id' => 'required|array',
+      'categories_id.*' => 'exists:categories,id'
+    ]);
 
-    $product->name = $request->name;
-    $product->price = $request->price;
+    $product = Product::create($data);
 
-    $product->save();
+    $product->categories()->attach($data['categories_id']);
 
     return response()->json([
       'message' => 'Product created successfully.',
