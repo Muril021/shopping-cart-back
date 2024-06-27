@@ -31,6 +31,29 @@ class ProductController extends Controller
 
     $product->save();
 
-    return response()->json($product);
+    return response()->json([
+      'message' => 'Product created successfully.',
+      'item' => $product
+    ]);
+  }
+
+  public function update(Request $request)
+  {
+    $data = $request->all();
+
+    Product::findOrFail($request->id)->update($data);
+
+    return response()->json([
+      'message' => 'Product updated successfully.'
+    ]);
+  }
+
+  public function destroy($id)
+  {
+    Product::findOrFail($id)->delete();
+
+    return response()->json([
+      'message' => 'Product deleted successfully.'
+    ]);
   }
 }

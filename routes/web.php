@@ -38,4 +38,20 @@ Route::prefix('/products')
     ProductController::class,
     'store'
   ]);
+
+  Route::put('/update/{id}', [
+    ProductController::class,
+    'update'
+  ]);
+
+  Route::delete('/{id}', [
+    ProductController::class,
+    'destroy'
+  ]);
 });
+
+/*
+Route::get('/token', function () {
+  return csrf_token();
+});
+*/
